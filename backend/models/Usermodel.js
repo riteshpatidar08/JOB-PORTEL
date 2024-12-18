@@ -1,26 +1,74 @@
-import mongoose  from "mongoose";
+import mongoose from 'mongoose';
 
 const UserSchema = new mongoose.Schema({
-    name : {
-        type : String
+  name: {
+    type: String,
+  },
+  email: {
+    type: String,
+  },
+  password: {
+    type: String,
+  },
+  phoneNumber: {
+    type: Number,
+  },
+  role: {
+    type: String,
+    enum: ['jobseeker', 'recruiter', 'admin'],
+    default: 'jobseeker',
+  },
+  jobseeker: {
+    education: [
+      {
+        degree: {
+          type: String,
+        },
+        institution: {
+          type: String,
+        },
+        year: {
+          type: Number,
+        },
+      },
+    ],
+    experiance: [
+      {
+        company: {
+          type: String,
+        },
+        role: {
+          type: String,
+        },
+        duration: {
+          type: String,
+        },
+      },
+    ],
+    skills: {
+      type: [String],
     },
-    email : {
-        type : String
+    resume: {
+      type: String,
     },
-    password : {
-        type : String
+  },
+  recruiter: {
+    companyName: {
+      type: String,
     },
-    phoneNumber : {
-        type : Number
+    companyWebsite: {
+      type: String,
     },
-    role : {
-        type : String,
-        enum : ['jobseeker', 'recruiter','admin'],
-        default : 'jobseeker'
+    permissons: [String],
+    default: ['post_jobs', 'view_applicants', 'manage_jobs'],
+  },
+  admin: {
+    permissons: [String],
+    default: ['manage_jobseekers', 'manage_recruiter'],
+  },
+});
 
-    }
-})
 
-const User = mongoose.model('User', UserSchema) ;
+const User = mongoose.model('User', UserSchema);
 
-export default User ;
+export default User;
