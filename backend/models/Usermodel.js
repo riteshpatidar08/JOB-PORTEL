@@ -37,7 +37,7 @@ const UserSchema = new mongoose.Schema({
         company: {
           type: String,
         },
-        role: {
+        jobRole: {
           type: String,
         },
         duration: {
