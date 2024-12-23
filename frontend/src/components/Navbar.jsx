@@ -5,7 +5,7 @@ function Navbar() {
   const location = useLocation();
   console.log(location);
   return (
-    <header className="h-16 px-4  justify-between flex items-center bg-gray-alpha-1">
+    <header className="h-16 px-4 sticky z-10 top-0  justify-between flex items-center bg-gray-alpha-1">
       <h1 className="text-2xl ml-6  font-bold">
         Job<span className="text-2xl font-bold text-red">finder</span>
       </h1>
@@ -19,7 +19,7 @@ function Navbar() {
 
         {location.pathname === '/register' ? (
           <span>
-            Already Registered? <Link className="text-red ">Login</Link>
+            Already Registered? <Link to="/login" className="text-red hover:underline">Login</Link>
           </span>
         ) : (
           <div className="flex gap-5">

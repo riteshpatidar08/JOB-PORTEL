@@ -1,7 +1,8 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
-
+import { Slide } from 'react-awesome-reveal';
+import './Signup.css'
 function Signup() {
   const { register, handleSubmit, watch } = useForm();
   const selectedRole = watch('role');
@@ -16,6 +17,8 @@ function Signup() {
     formData.append('password',data.password)
     formData.append('phoneNumber',data.phoneNumber)
     formData.append('role',data.role)
+
+    
     // let dataPayload = {
     //   name: data.name,
     //   email: data.email,
@@ -42,7 +45,9 @@ function Signup() {
         ],
      
       }))
-      formData.append('skills',data.skills.split(' '))
+      formData.append('skills',  data.skills
+    .split(/[ ,]+/) 
+    .filter((skill) => skill.trim() !== '') )
       formData.append('resume',data.resume[0])
      
     } else if (data.role === 'recruiter') {
@@ -68,7 +73,8 @@ function Signup() {
   };
 
   return (
-    <div className="p-6 font-body shadow-md max-w-2xl mx-auto bg-gray-alpha-1 mt-10 rounded-xl">
+   
+    <div className="p-6 container max-h-[500px]  overflow-y-scroll font-body shadow-md max-w-2xl mx-auto bg-gray-alpha-1 mt-10 rounded-xl">
       <div className="flex flex-col gap-1 my-6">
         <h1 className="text-sm font-semibold">
           Create your <span className="text-red">JobFinder</span> profile
@@ -80,6 +86,7 @@ function Signup() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* Basic Fields */}
+         <Slide>
         <div className="grid grid-cols-2 text-sm md:grid-cols-2 gap-6">
           <div>
             <label className="block text-gray-700 mb-2">Name</label>
@@ -285,8 +292,10 @@ function Signup() {
         >
           Register
         </button>
+        </Slide>
       </form>
     </div>
+   
   );
 }
 

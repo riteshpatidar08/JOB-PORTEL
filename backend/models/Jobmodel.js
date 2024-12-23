@@ -13,13 +13,31 @@ const JobSchema = new mongoose.Schema({
   },
   employment: {
     type: [String],
-    enum: [Full - time, Part - time, Contract, Internship],
+    enum: ['Full - time', 'Part - time', 'Contract', 'Internship'],
   },
   jobDescription: {
     type: String,
   },
   requirement: {
     type: [String],
+  },
+  experience: {
+    type: String,
+    enum: ['Freshers', '1-2 years', '2-3 years', '3+ years'],
+    required: true,
+  },
+  salaryRange: {
+    type: {
+      min: {
+        type: Number,
+        required: true,
+      },
+      max: {
+        type: Number,
+        required: true,
+      },
+    },
+    required: true,
   },
   phoneNumber: {
     type: mongoose.Schema.Types.ObjectId,
@@ -46,3 +64,4 @@ export default Job;
 //requirement
 //phoneNUMBER => USER
 // isActive
+
