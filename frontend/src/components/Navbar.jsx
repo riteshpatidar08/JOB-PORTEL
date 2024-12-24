@@ -19,12 +19,15 @@ function Navbar() {
 
         {location.pathname === '/register' ? (
           <span>
-            Already Registered? <Link to="/login" className="text-red hover:underline">Login</Link>
+            Already Registered?{' '}
+            <Link to="/login" className="text-red hover:underline">
+              Login
+            </Link>
           </span>
         ) : (
           <div className="flex gap-5">
             {' '}
-            <button className="bg-red text-white px-8 py-2 rounded-full hover:bg-red-100 transition-all">
+            <button className="bg-red text-white px-8 py-2 rounded-full cd hover:bg-red-100 transition-all">
               Login
             </button>
             <Link

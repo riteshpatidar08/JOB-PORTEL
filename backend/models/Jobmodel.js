@@ -13,7 +13,7 @@ const JobSchema = new mongoose.Schema({
   },
   employment: {
     type: [String],
-    enum: ['Full - time', 'Part - time', 'Contract', 'Internship'],
+    enum: ['Full-time', 'Part-time', 'Contract', 'Internship'],
   },
   jobDescription: {
     type: String,
@@ -64,4 +64,3 @@ export default Job;
 //requirement
 //phoneNUMBER => USER
 // isActive
-

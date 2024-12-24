@@ -19,4 +19,19 @@ const createJob = async (req, res) => {
   }
 };
 
-export { createJob };
+const getJobs = async (req, res) => {
+  try {
+    const { requirement, location } = req.query;
+    console.log(requirement);
+    console.log(requirement.split(','));
+    const query = {
+      ...(requirement && { requirement: { $in: requirement.split(',') } }),
+      ...(location && { location: { $regex: location } }),
+    };
+
+    const jobs = await Job.find(query);
+    if (jobs) sendSuccess('Jobs fetched Successfully', jobs, req);
+  } catch (error) {}
+};
+
+export { createJob, getJobs };

@@ -1,0 +1,25 @@
+Common Route:
+/ - Home
+
+
+Admin Specific Routes:
+/admin-dashboard
+/manage-jobseekers
+/manage-recruiters
+
+
+Recruiter Specific Routes:
+/recruiter-dashboard
+/post-job
+/view-applicants
+
+
+Jobseeker Specific Routes:
+/jobseekers-dashboard
+/search-jobs
+/view-applied-jobs
+
+
+Authentication Routes:
+/login
+/register

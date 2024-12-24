@@ -30,8 +30,12 @@ const Signup = async (req, res) => {
     };
 
     if (role === 'jobseeker') {
+     
+      const parsedJobseekerData = JSON.parse(jobseeker)
+      console.log(parsedJobseekerData)
       userData.jobseeker = {
-        ...jobseeker,
+        ...parsedJobseekerData,
+        
         resume: req.file ? req.file.path : null,
       };
     }
