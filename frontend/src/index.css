@@ -1,5 +1,9 @@
 @tailwind base;
+@layer base {
+  body {  @apply font-display}
+}
+ 
 @tailwind components;
 @tailwind utilities;
 
- 
+

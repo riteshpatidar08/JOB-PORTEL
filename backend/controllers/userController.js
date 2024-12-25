@@ -32,16 +32,18 @@ const Signup = async (req, res) => {
     if (role === 'jobseeker') {
      
       const parsedJobseekerData = JSON.parse(jobseeker)
+   
       console.log(parsedJobseekerData)
       userData.jobseeker = {
-        ...parsedJobseekerData,
+    
+      ...parsedJobseekerData ,
         
         resume: req.file ? req.file.path : null,
       };
     }
 
     if (role === 'recruiter') {
-      userData.recruiter = recruiter;
+      userData.recruiter = JSON.parse(recruiter);
     }
 
     const user = await User.create(userData);

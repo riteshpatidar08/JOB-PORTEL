@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaMapMarkerAlt, FaRegClock, FaMoneyBillWave } from 'react-icons/fa';  
 
 const JobCard = ({ job }) => {
   const { title, companyName, location, employment, jobDescription, requirement, experience, salaryRange, isActive } = job;
@@ -7,8 +8,17 @@ const JobCard = ({ job }) => {
     <div className="job-card border p-4 mb-4 rounded-lg shadow-md">
       <h2 className="text-xl font-semibold">{title}</h2>
       <p className="text-gray-600">{companyName}</p>
-      <p className="text-gray-500">{location}</p>
-      <p className="text-sm font-semibold mt-2">Employment Type: {employment.join(", ")}</p>
+      
+      <div className="flex items-center mt-2">
+        <FaMapMarkerAlt className="text-gray-500 mr-2" />
+        <p className="text-gray-500">{location}</p>
+      </div>
+
+      <div className="flex items-center mt-2">
+        <FaRegClock className="text-gray-500 mr-2" />
+        <p className="text-sm font-semibold">Employment Type: {employment.join(", ")}</p>
+      </div>
+      
       <p className="mt-2">{jobDescription}</p>
       
       <h3 className="font-semibold mt-4">Requirements:</h3>
@@ -19,7 +29,12 @@ const JobCard = ({ job }) => {
       </ul>
 
       <p className="mt-2">Experience Required: {experience}</p>
-      <p className="mt-2">Salary Range: ${salaryRange.min} - ${salaryRange.max}</p>
+      
+      <div className="flex items-center mt-2">
+        <FaMoneyBillWave className="text-gray-500 mr-2" />
+        <p className="mt-2">Salary Range: ${salaryRange.min} - ${salaryRange.max}</p>
+      </div>
+      
       <p className="mt-2 text-green-500 font-semibold">{isActive ? 'Active' : 'Inactive'}</p>
     </div>
   );

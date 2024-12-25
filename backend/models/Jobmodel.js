@@ -51,6 +51,7 @@ const JobSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
+ 
 });
 
 const Job = mongoose.model('Job', JobSchema);

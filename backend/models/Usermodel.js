@@ -66,6 +66,7 @@ const UserSchema = new mongoose.Schema({
     permissons: [String],
     default: ['manage_jobseekers', 'manage_recruiter'],
   },
+  
 });
 
 

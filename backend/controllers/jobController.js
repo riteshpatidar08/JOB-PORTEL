@@ -1,4 +1,5 @@
 import Job from '../models/Jobmodel.js';
+import User from '../models/Usermodel.js';
 import { sendSuccess } from '../utils/response.js';
 
 const createJob = async (req, res) => {
@@ -35,3 +36,4 @@ const getJobs = async (req, res) => {
 };
 
 export { createJob, getJobs };
+
