@@ -15,8 +15,6 @@ Recruiter Specific Routes:
 
 
 Jobseeker Specific Routes:
-/jobseekers-dashboard
-/search-jobs
 /view-applied-jobs
 
 

@@ -5,23 +5,28 @@ import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import Login from './components/auth/Login';
 import ProtectedRoutes from './components/ProtectedRoutes';
+import RecruiterHomePage from './pages/RecruiterHomePage';
+import ApplicantsPage from './pages/ApplicantsPage';
 
 function App() {
   return (
     <div>
       <Navbar />
       <Routes>
+
         <Route path="/register" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-
+ <Route path="/" element={<HomePage />} />
         <Route
           element={
             <ProtectedRoutes
-              allowedRoles={['jobseeker', 'recruiter', 'admin']}
+              allowedRoles={['recruiter']}
             />
           }
         >
-          <Route path="/" element={<HomePage />} />
+         
+          <Route path='/recruiter-home' element={<RecruiterHomePage/>} />
+          <Route path='/applicants' element={<ApplicantsPage/>}/>
         
         </Route>
       </Routes>

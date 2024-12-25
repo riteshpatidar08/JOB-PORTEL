@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './Signup.css'; // Reusing the same styling
-import { useDispatch } from 'react-redux';
+import { useDispatch ,useSelector } from 'react-redux';
 import { login } from '../../../redux/slices/authSlice';
+import { CircularProgress } from '@mui/material';
 function Login() {
+  const {role ,loading} = useSelector((state)=>state.auth)
+const navigate = useNavigate()
+  console.log(role)
+
   const { register, handleSubmit, formState: { errors } } = useForm();
 const dispatch = useDispatch()
   const onSubmit = (data) => {
@@ -12,6 +18,12 @@ const dispatch = useDispatch()
    dispatch(login(data))
    
   };
+
+  useEffect(()=>{
+    if(role === 'recruiter'){
+      navigate('/recruiter-home')
+    }
+  },[role])
 
   return (
     <div className="p-6 container max-h-[500px] overflow-y-scroll font-body shadow-md max-w-2xl mx-auto bg-gray-alpha-1 mt-10 rounded-xl">
@@ -65,7 +77,7 @@ const dispatch = useDispatch()
           type="submit"
           className="w-full bg-red text-white py-2 rounded-full"
         >
-          Log In
+        {loading  ? <CircularProgress sx={{color : 'white'}} size={14} /> : "Login"}
         </button>
       </form>
     </div>

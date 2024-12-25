@@ -10,7 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
     "@heroicons/react": "^1.0.6",
+    "@mui/material": "^6.3.0",
     "@reduxjs/toolkit": "^2.5.0",
     "heroicons": "^2.2.0",
     "jwt-decode": "^4.0.0",

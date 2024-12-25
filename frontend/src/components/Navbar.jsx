@@ -1,23 +1,38 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 function Navbar() {
   const location = useLocation();
+  const { role } = useSelector((state) => state.auth);
+
+  console.log(role);
   console.log(location);
+
+
   return (
     <header className="h-16 px-4 sticky z-10 top-0  justify-between flex items-center bg-gray-alpha-1">
-      <h1 className="text-2xl ml-6  font-bold">
+      <Link to='/' className="text-2xl ml-6  font-bold">
         Job<span className="text-2xl font-bold text-red">finder</span>
-      </h1>
+      </Link>
 
       <div className="flex items-center justify-between gap-5">
         <nav>
-          <Link className="text-md hover:underline transition-all duration-150 font-semibold">
+          <Link to='/' className="text-md hover:underline transition-all duration-150 font-semibold">
             Jobs
           </Link>
         </nav>
 
-        {location.pathname === '/register' ? (
+        {role === 'recruiter' ? (
+          <nav>
+            <Link
+              to="/applicants"
+              className="text-md hover:underline transition-all duration-150 font-semibold"
+            >
+              View Applicants
+            </Link>
+          </nav>
+        ) : location.pathname === '/register' ? (
           <span>
             Already Registered?{' '}
             <Link to="/login" className="text-red hover:underline">
@@ -27,9 +42,9 @@ function Navbar() {
         ) : (
           <div className="flex gap-5">
             {' '}
-            <button className="bg-red text-white px-8 py-2 rounded-full cd hover:bg-red-100 transition-all">
+            <Link to='/login' className="bg-red text-white px-8 py-2 rounded-full cd hover:bg-red-100 transition-all">
               Login
-            </button>
+            </Link>
             <Link
               to="/register"
               className="bg-red text-white px-8 py-2 rounded-full hover:bg-red-100 transition-all"

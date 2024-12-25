@@ -1,6 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import { getRole } from '../../src/lib/utils';
+
+
+
+
 export const login = createAsyncThunk(
   '/login',
 
@@ -9,7 +14,7 @@ export const login = createAsyncThunk(
     try {
       const data = await axios.post(
         'http://localhost:3000/api/login',
-        loginData
+        loginData 
       );
       return data;
     } catch (error) {
@@ -22,7 +27,7 @@ const initialState = {
   loading: false,
   error: null,
   token: null,
-  role: null,
+  role: getRole()
 };
 
 const authSlice = createSlice({
@@ -43,9 +48,11 @@ const authSlice = createSlice({
         localStorage.setItem('token', token);
         localStorage.setItem('role', role);
         localStorage.setItem('id', id);
+        state.loading = false
       })
       .addCase(login.rejected, (state, action) => {
         console.log(action);
+        state.loading = false
       });
   },
 });
