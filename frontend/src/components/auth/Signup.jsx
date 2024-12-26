@@ -3,12 +3,14 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { Slide } from 'react-awesome-reveal';
 import { CircularProgress } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import './Signup.css';
 function Signup() {
-  const { register, handleSubmit, watch } = useForm();
+  const { register, handleSubmit, watch, reset } = useForm();
   const selectedRole = watch('role');
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
+  
   const onSubmit = (data) => {
     setLoading(true);
     const formData = new FormData();
@@ -38,7 +40,7 @@ function Signup() {
               year: data.year,
             },
           ],
-          experiance: [
+          experience: [
             {
               company: data.company,
               duration: data.duration,
@@ -71,6 +73,8 @@ function Signup() {
       })
       .then((response) => {
         console.log(response.data);
+        reset();
+        navigate('/login');
       })
       .catch((err) => {
         console.log(err);

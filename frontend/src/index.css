@@ -1,6 +1,6 @@
 @tailwind base;
 @layer base {
-  body {  @apply font-display}
+  body {  @apply font-body}
 }
  
 @tailwind components;

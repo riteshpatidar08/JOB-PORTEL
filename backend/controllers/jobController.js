@@ -22,18 +22,118 @@ const createJob = async (req, res) => {
 
 const getJobs = async (req, res) => {
   try {
-    const { requirement, location } = req.query;
-    console.log(requirement);
-    console.log(requirement.split(','));
+    const {
+      minSalary,
+      maxSalary,
+      requirement,
+      location,
+      employment,
+      experience,
+    } = req.query;
+
     const query = {
+      ...(minSalary &&
+        maxSalary && {
+          'salaryRange.min': { $gte: parseInt(minSalary) },
+          'salaryRange.max': { $lte: parseInt(maxSalary) },
+        }),
+      ...(location && { location: { $regex: location.trim(), $options: 'i' } }),
+      ...(employment && { employment: employment.split(',') }),
+      ...(experience && { experience: experience.trim() }),
       ...(requirement && { requirement: { $in: requirement.split(',') } }),
-      ...(location && { location: { $regex: location } }),
+      isActive: true,
     };
 
-    const jobs = await Job.find(query);
-    if (jobs) sendSuccess('Jobs fetched Successfully', jobs, req);
+    console.log(query);
+
+    const jobs = await Job.find(query)
+      .populate('companyName')
+      .populate('phoneNumber')
+      .populate('email');
+
+    sendSuccess('Jobs fetched successfully', jobs, res);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({
+      message: error.message,
+    });
+  }
+};
+
+const applyJob = async (req, res) => {
+  try {
+    const { userId, jobId } = req.body;
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({
+        message: 'User not found',
+      });
+    }
+
+    const resumePath = user.jobseeker.resume;
+
+    if (!resumePath) {
+      return res.status(404).json({
+        message: 'No resume found',
+      });
+    }
+    console.log(resumePath);
+
+    const job = await Job.findById(jobId);
+
+    console.log(job);
+
+    if (!job && !job.isActive) {
+      return res.status(404).json({
+        message: 'No job found aur not active',
+      });
+    }
+
+    const appliedJob = job.applicants.some((job) => job.userId === userId);
+    console.log(appliedJob);
+    if (appliedJob) {
+      return res.status(400).json({
+        message: 'You have already applied for this Job',
+      });
+    }
+
+    console.log(userId, jobId);
+
+    job.applicants.push({
+      userId: userId,
+      status: 'Pending',
+      resume: resumePath,
+    });
+
+    user.appliedJobs.push({
+      jobId,
+    });
+
+    await job.save();
+    await user.save();
+
+    res.status(200).send('Job applied');
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('interval server error');
+  }
+};
+
+const getApplicants = async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log(id);
+    const job = await Job.findById(id).populate(
+      'applicants.userId',
+      'name email'
+    );
+
+    res.status(200).json({
+      job,
+    });
   } catch (error) {}
 };
 
-export { createJob, getJobs };
-
+export { createJob, getJobs, applyJob, getApplicants };

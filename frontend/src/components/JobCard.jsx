@@ -47,7 +47,7 @@ const JobList = () => {
       _id: '1',
       title: 'Full Stack Developer',
       companyName: 'Buddy Tech Solutions',
-      location: 'New York, NY',
+      location: 'Jaipur',
       employment: ['Full-time'],
       jobDescription: 'We are looking for a passionate full stack developer to join our team. You will be working on both front-end and back-end tasks.',
       requirement: ['React', 'Node.js', 'MongoDB', 'Express.js'],
@@ -90,6 +90,7 @@ const JobList = () => {
     },
   ];
 
+  console.log(JSON.stringify(jobs))
   return (
     <div className="job-list">
       {jobs.map((job) => (
@@ -100,3 +101,5 @@ const JobList = () => {
 };
 
 export default JobList;
+
+

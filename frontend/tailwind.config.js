@@ -68,7 +68,7 @@ export default {
         sans: ['Inter', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
         serif: ['Merriweather', 'Georgia', 'serif'],
         mono: ['Fira Code', 'Courier New', 'monospace'],
-        display: ['Poppins', 'Montserrat', 'sans-serif'],
+        display: ['Poppins', 'sans-serif'],
         body: ['Open Sans', 'Lato', 'sans-serif'],
       },
       screens: {

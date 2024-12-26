@@ -2,6 +2,7 @@ import User from './../models/Usermodel.js';
 import { sendSuccess } from '../utils/response.js';
 import { hashPassword, comparePassword } from '../utils/password.js';
 import { generateToken } from '../utils/jwt.js';
+import Job from '../models/Jobmodel.js';
 
 const Signup = async (req, res) => {
   try {
@@ -21,6 +22,7 @@ const Signup = async (req, res) => {
     const hashedPassword = await hashPassword(password);
 
     console.log(hashedPassword);
+
     let userData = {
       name,
       email,
@@ -30,14 +32,12 @@ const Signup = async (req, res) => {
     };
 
     if (role === 'jobseeker') {
-     
-      const parsedJobseekerData = JSON.parse(jobseeker)
-   
-      console.log(parsedJobseekerData)
+      const parsedJobseekerData = JSON.parse(jobseeker);
+
+      console.log(parsedJobseekerData);
       userData.jobseeker = {
-    
-      ...parsedJobseekerData ,
-        
+        ...parsedJobseekerData,
+
         resume: req.file ? req.file.path : null,
       };
     }
@@ -106,3 +106,14 @@ const Login = async (req, res) => {
 };
 
 export { Signup, Login };
+
+//step to apply for a job
+
+//Apply now
+
+//Login => userId
+
+//get userId
+//get user
+//
+//Job => jobId

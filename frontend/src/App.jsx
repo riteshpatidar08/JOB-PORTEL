@@ -13,21 +13,12 @@ function App() {
     <div>
       <Navbar />
       <Routes>
-
         <Route path="/register" element={<Signup />} />
         <Route path="/login" element={<Login />} />
- <Route path="/" element={<HomePage />} />
-        <Route
-          element={
-            <ProtectedRoutes
-              allowedRoles={['recruiter']}
-            />
-          }
-        >
-         
-          <Route path='/recruiter-home' element={<RecruiterHomePage/>} />
-          <Route path='/applicants' element={<ApplicantsPage/>}/>
-        
+        <Route path="/" element={<HomePage />} />
+        <Route element={<ProtectedRoutes allowedRoles={['recruiter']} />}>
+          <Route path="/recruiter-home" element={<RecruiterHomePage />} />
+          <Route path="/applicants" element={<ApplicantsPage />} />
         </Route>
       </Routes>
     </div>
