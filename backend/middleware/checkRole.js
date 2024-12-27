@@ -8,6 +8,8 @@ const checkRole = (...allowedRoles) => {
       }
 
       const userRole = req.user ? req.user.role : 'unauthenticated';
+
+      
       return res.status(403).json({
         error: 'Access Denied',
         message: `Your role "${userRole}" does not have permission to access this resource. Allowed roles: ${allowedRoles.join(

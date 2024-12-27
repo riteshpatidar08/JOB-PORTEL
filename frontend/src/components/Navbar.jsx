@@ -1,26 +1,68 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logOut } from '../../redux/slices/authSlice';
+import { ChevronUp, ChevronDown } from 'lucide-react';
 function Navbar() {
   const location = useLocation();
+  const navigate = useNavigate();
   const { role } = useSelector((state) => state.auth);
+  const [dropdownVisible, setDropdownVisible] = useState(false);
 
+  const dispatch = useDispatch();
+
+  const handleLogOut = async () => {
+    await dispatch(logOut());
+    navigate('/login');
+  };
+
+  const handleDropdown = () => {
+    setDropdownVisible(true);
+  };
+
+  const handleLeaveDropdown = () => {
+    setDropdownVisible(false);
+  };
   return (
-    <header className="h-16 px-4 sticky z-10 top-0 flex bg-gray-alpha-1 items-center justify-between">
-      <Link to="/" className="text-2xl ml-6 font-bold">
+    <header className="h-16 m-3 rounded-lg drop-shadow-md px-4 sticky z-10 top-0 flex bg-dark-gray-1 items-center justify-between">
+      <Link to="/" className="text-2xl ml-6 text-white font-bold">
         Job<span className="text-2xl font-bold text-red">finder</span>
       </Link>
 
       <div className="flex items-center justify-between gap-5">
-        <nav>
-          <Link
-            to="/"
-            className="text-md hover:underline transition-all duration-150 font-medium"
-          >
-            Jobs
-          </Link>
+        <nav
+          onMouseEnter={handleDropdown}
+          onMouseLeave={handleLeaveDropdown}
+          className="relative"
+        >
+          <div className="flex">
+            <Link
+              to="/"
+              className="text-md text-white hover:text-red transition-all duration-150 font-medium"
+            >
+              Jobs
+            </Link>
+            <span className="text-white">
+              {dropdownVisible ? <ChevronUp /> : <ChevronDown />}
+            </span>
+          </div>
+          {dropdownVisible && (
+            <div className="bg-input-field w-64 p-4 absolute top-6 rounded-lg text-white flex gap-6 ">
+              <div className="flex flex-col flex-1  gap-2 text-sm">
+                <Link>Jobs for React</Link>
+                <Link>Jobs for Node JS</Link>
+                <Link>Jobs for Python</Link>
+                <Link>Jobs for Data Analytics</Link>
+              </div>
+              <div className="flex flex-1 flex-col gap-2 text-sm">
+                <Link>Jobs in Jaipur</Link>
+                <Link>Jobs in Delhi</Link>
+                <Link>Jobs in Pune</Link>
+                <Link>Jobs in Indore</Link>
+              </div>
+            </div>
+          )}
         </nav>
 
         {role === 'jobseeker' && (
@@ -28,7 +70,7 @@ function Navbar() {
             <nav>
               <Link
                 to="/my-application"
-                className="text-md hover:underline transition-all duration-150 font-medium"
+                className="text-md hover:text-red text-white transition-all duration-150 font-medium"
               >
                 My Applications
               </Link>
@@ -36,7 +78,7 @@ function Navbar() {
             <nav>
               <Link
                 to="/profile"
-                className="text-md hover:underline transition-all duration-150 font-medium"
+                className="text-md hover:underline text-white transition-all duration-150 font-medium"
               >
                 Profile
               </Link>
@@ -49,7 +91,7 @@ function Navbar() {
             <nav>
               <Link
                 to="/post-job"
-                className="text-md hover:underline transition-all duration-150 font-medium"
+                className="text-md hover:text-red ease-in-out  text-white transition-all duration-150 font-medium"
               >
                 Post a Job
               </Link>
@@ -57,7 +99,7 @@ function Navbar() {
             <nav>
               <Link
                 to="/applicants"
-                className="text-md hover:underline transition-all duration-150 font-medium"
+                className="text-md hover:underline text-white transition-all duration-150 font-medium"
               >
                 View Applicants
               </Link>
@@ -65,7 +107,7 @@ function Navbar() {
             <nav>
               <Link
                 to="/manage-jobs"
-                className="text-md hover:underline transition-all duration-150 font-medium"
+                className="text-md hover:underline  text-white transition-all duration-150 font-medium"
               >
                 Manage Jobs
               </Link>
@@ -114,7 +156,7 @@ function Navbar() {
           )}
 
         {location.pathname === '/register' && (
-          <span>
+          <span className="text-white">
             Already Registered?{' '}
             <Link to="/login" className="text-red hover:underline">
               Login
@@ -122,11 +164,11 @@ function Navbar() {
           </span>
         )}
 
-        
         {role && (
           <nav>
             <Link
               to="/logout"
+              onClick={handleLogOut}
               className="bg-red text-white px-8 py-2 rounded-full hover:bg-red-100 transition-all"
             >
               Logout

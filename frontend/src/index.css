@@ -1,9 +1,17 @@
 @tailwind base;
 @layer base {
-  body {  @apply font-body}
+  body {  @apply font-sans bg-gray-alpha-1} 
 }
  
 @tailwind components;
+
+
 @tailwind utilities;
 
+
+@layer utilities {
+  .error {
+    @apply text-bright-red mt-2 ml-1 text-xs
+  }
+}
 

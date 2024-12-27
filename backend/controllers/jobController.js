@@ -68,7 +68,8 @@ const applyJob = async (req, res) => {
 
     if (!user) {
       return res.status(404).json({
-        message: 'User not found',
+        message:
+          'User not found. Please ensure you are logged in with a valid account.',
       });
     }
 
@@ -76,22 +77,32 @@ const applyJob = async (req, res) => {
 
     if (!resumePath) {
       return res.status(404).json({
-        message: 'No resume found',
+        message:
+          'No resume found. Please upload your resume in your profile to apply for jobs.',
       });
     }
-    console.log(resumePath);
+
+    console.log('Resume Path:', resumePath);
 
     const job = await Job.findById(jobId);
 
-    console.log(job);
-
-    if (!job && !job.isActive) {
+    if (!job) {
       return res.status(404).json({
-        message: 'No job found aur not active',
+        message:
+          'The specified job could not be found. Please check the job listing.',
       });
     }
 
-    const appliedJob = job.applicants.some((job) => job.userId === userId);
+    if (!job.isActive) {
+      return res.status(400).json({
+        message:
+          'This job is no longer active. Please explore other opportunities.',
+      });
+    }
+
+    console.log('Job Details:', job);
+
+     const appliedJob = job.applicants.some((job) => job.userId === userId);
     console.log(appliedJob);
     if (appliedJob) {
       return res.status(400).json({
@@ -99,7 +110,7 @@ const applyJob = async (req, res) => {
       });
     }
 
-    console.log(userId, jobId);
+    console.log('Applying for Job:', { userId, jobId });
 
     job.applicants.push({
       userId: userId,
@@ -114,26 +125,53 @@ const applyJob = async (req, res) => {
     await job.save();
     await user.save();
 
-    res.status(200).send('Job applied');
+    res.status(200).json({
+      message: 'Job application submitted successfully. Best of luck!',
+    });
   } catch (err) {
-    console.log(err);
-    res.status(500).send('interval server error');
+    console.error('Error in applying for job:', err.message);
+    res.status(500).json({
+      message:
+        'An unexpected error occurred while processing your request. Please try again later.',
+      error: err.message,
+    });
   }
 };
 
 const getApplicants = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(id);
+    console.log('Job ID:', id);
+
     const job = await Job.findById(id).populate(
       'applicants.userId',
       'name email'
     );
 
+    if (!job) {
+      return res.status(404).json({
+        message: 'Job not found. Please ensure the job ID is correct.',
+      });
+    }
+
+    if (job.applicants.length === 0) {
+      return res.status(404).json({
+        message: 'No applicants found for this job.',
+      });
+    }
+
     res.status(200).json({
       job,
+      message: 'Applicants fetched successfully.',
     });
-  } catch (error) {}
+  } catch (error) {
+    console.error('Error in fetching applicants:', error.message);
+    res.status(500).json({
+      message:
+        'An unexpected error occurred while retrieving applicants. Please try again later.',
+      error: error.message,
+    });
+  }
 };
 
 export { createJob, getJobs, applyJob, getApplicants };

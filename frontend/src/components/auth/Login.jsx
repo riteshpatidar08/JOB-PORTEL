@@ -6,12 +6,11 @@ import './Signup.css'; // Reusing the same styling
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../../redux/slices/authSlice';
 import { CircularProgress } from '@mui/material';
+import { MailIcon, LockClosedIcon } from '@heroicons/react/outline'; // Import Heroicons
 
 function Login() {
   const { role, loading } = useSelector((state) => state.auth);
   const navigate = useNavigate();
-  console.log(role);
-
   const {
     register,
     handleSubmit,
@@ -25,12 +24,14 @@ function Login() {
 
   useEffect(() => {
     if (role === 'recruiter') {
-      navigate('/recruiter-home');
+      navigate('/');
+    } if(role ==='jobseeker'){
+      navigate('/')
     }
   }, [role]);
 
   return (
-    <div className="p-6 container max-h-[500px] overflow-y-scroll shadow-md max-w-2xl mx-auto bg-gray-alpha-1 mt-10 rounded-xl">
+    <div className="p-6 bg-dark-gray-1 text-white container max-h-[500px] overflow-y-scroll shadow-md max-w-2xl mx-auto mt-10 rounded-xl">
       <div className="flex flex-col gap-1 my-6">
         <h1 className="text-sm font-semibold">
           Welcome back to <span className="text-red">JobFinder</span>
@@ -40,17 +41,20 @@ function Login() {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 text-sm">
         <div>
           <label className="block text-gray-700 mb-2">Email</label>
-          <input
-            type="email"
-            {...register('email', { required: 'Email is required' })}
-            className={`w-full border drop-shadow-md rounded-full px-3 py-2 ${
-              errors.email ? 'border-red-500' : 'border-gray-300'
-            } focus:outline-none `}
-            placeholder="Your Email"
-          />
+          <div className="relative">
+            <MailIcon className="absolute z-10 left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <input
+              type="email"
+              {...register('email', { required: 'Email is required' })}
+              className={`w-full pl-10 border bg-input-field drop-shadow-md rounded-full px-3 py-2 ${
+                errors.email ? 'border-red-500' : 'border-gray-300'
+              } focus:outline-none`}
+              placeholder="Your Email"
+            />
+          </div>
           {errors.email && (
             <p className="text-red-500 mt-1 text-red text-xs">
               {errors.email.message}
@@ -60,14 +64,17 @@ function Login() {
 
         <div>
           <label className="block text-gray-700 mb-2">Password</label>
-          <input
-            type="password"
-            {...register('password', { required: 'Password is required' })}
-            className={`w-full border drop-shadow-md rounded-full px-3 py-2 ${
-              errors.password ? 'border-red-500' : 'border-gray-300'
-            } focus:outline-none `}
-            placeholder="Your Password"
-          />
+          <div className="relative">
+            <LockClosedIcon className="absolute z-10 left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <input
+              type="password"
+              {...register('password', { required: 'Password is required' })}
+              className={`w-full pl-10 border bg-input-field drop-shadow-md rounded-full px-3 py-2 ${
+                errors.password ? 'border-red-500' : 'border-gray-300'
+              } focus:outline-none`}
+              placeholder="Your Password"
+            />
+          </div>
           {errors.password && (
             <p className="text-red-500 my-1 text-red text-xs">
               {errors.password.message}
@@ -90,7 +97,7 @@ function Login() {
 
         <button
           type="submit"
-          className="w-full bg-red text-white py-2 rounded-full"
+          className="w-full font-semibold tracking-wide bg-red text-white py-2 rounded-full"
         >
           {loading ? (
             <CircularProgress sx={{ color: 'white' }} size={14} />

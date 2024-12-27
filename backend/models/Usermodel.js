@@ -66,33 +66,34 @@ const UserSchema = new mongoose.Schema({
     permissons: [String],
     default: ['manage_jobseekers', 'manage_recruiter'],
   },
-  appliedJobs : [
+  appliedJobs: [
     {
-      jobId : {  type : mongoose.Schema.Types.ObjectId ,  ref  : 'Job'}
-    
-    }
-  ]
+      jobId: { type: mongoose.Schema.Types.ObjectId, ref: 'Job' },
+    },
+
+  ],
+
+  
 });
 
-UserSchema.pre('save' , function(next){
-  if(this.role === 'jobseeker'){
-    this.recruiter = undefined ;
-    this.admin = undefined
+UserSchema.pre('save', function (next) {
+  if (this.role === 'jobseeker') {
+    this.recruiter = undefined;
+    this.admin = undefined;
   }
 
-  if(this.role === 'recruiter'){
-    this.jobseeker = undefined ;
-    this.admin = undefined
+  if (this.role === 'recruiter') {
+    this.jobseeker = undefined;
+    this.admin = undefined;
   }
 
-   if(this.role === 'admin'){
-    this.recruiter = undefined ;
-    this.jobseeker = undefined
+  if (this.role === 'admin') {
+    this.recruiter = undefined;
+    this.jobseeker = undefined;
   }
 
-  next()
-
-})
+  next();
+});
 
 const User = mongoose.model('User', UserSchema);
 

@@ -5,7 +5,7 @@ import checkRole from '../middleware/checkRole.js';
 
 export const router = express.Router();
 
-router.post('/createjob', protect, checkRole('recruiter,admin'), createJob);
+router.post('/createjob' , createJob);
 router.get('/jobs', getJobs);
-router.post('/applyjob', protect, checkRole('jobseeker'), applyJob);
+router.post('/applyjob',  applyJob);
 router.get('/job/:id/applicants',  getApplicants);
