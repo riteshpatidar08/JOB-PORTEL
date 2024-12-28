@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { getToken } from '../../src/lib/utils';
 
 const initialState = {
   loading: false,
@@ -12,6 +13,26 @@ export const getJobs = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get('http://localhost:3000/api/jobs');
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const createJob = createAsyncThunk(
+  '/get/createJob',
+  async (jobPyload, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        'http://locahost:3000/api/createJob',
+        jobPyload,
+        {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+        }
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error);

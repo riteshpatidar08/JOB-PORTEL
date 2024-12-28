@@ -3,10 +3,14 @@ export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
+        backdropBlur: {
+        lg: '10px',
+      },
       backgroundColor: {
         white: '#ffffff',
         'light-gray-1': '#fbfbfb',
-        'light-gray-2': '#f9f9f9',
+        'light-gray-2': '#f9f9f9'
+        ,
         'light-gray-3': '#f4f5f6',
         gray: '#ececec',
         red: '#d65551',
@@ -82,5 +86,7 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    
+  ],
 };

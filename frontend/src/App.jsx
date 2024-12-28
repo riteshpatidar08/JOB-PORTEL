@@ -1,30 +1,31 @@
 import Signup from './components/auth/Signup';
-import Hero from './components/Hero';
 import Navbar from './components/Navbar';
 import { Routes, Route } from 'react-router-dom';
-import HomePage from './pages/HomePage';
+import HomePage from './pages/OpenPages/HomePage';
 import Login from './components/auth/Login';
 import ProtectedRoutes from './components/ProtectedRoutes';
-import RecruiterHomePage from './pages/RecruiterHomePage';
-import ApplicantsPage from './pages/ApplicantsPage';
+import ApplicantsPage from './pages/RecruiterPages/ApplicantsPage';
 import UnprotectRoutes from './components/UnprotectRoutes';
 import './App.css';
+import PostJob from './pages/RecruiterPages/PostJob';
+import '@mantine/core/styles.css';
+import JobDetailsPage from './pages/OpenPages/JobDetailsPage';
 
 function App() {
   return (
-    <div className="black">
+    <div className="black antialiased">
       <Navbar />
       <Routes>
-
-<Route element={<UnprotectRoutes/>}>
-    <Route path="/register" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-</Route>
-      
+        <Route element={<UnprotectRoutes />}>
+          <Route path="/register" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+        </Route>
 
         <Route path="/" element={<HomePage />} />
+        <Route path="/job/:id" element={<JobDetailsPage />} />
+
         <Route element={<ProtectedRoutes allowedRoles={['recruiter']} />}>
-          <Route path="/recruiter-home" element={<RecruiterHomePage />} />
+          <Route path="/post-job" element={<PostJob />} />
           <Route path="/applicants" element={<ApplicantsPage />} />
         </Route>
       </Routes>

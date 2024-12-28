@@ -1,7 +1,8 @@
 import React, { useState , useEffect } from 'react';
-import JobCard from '../components/JobCard';
-import { getJobs } from '../../redux/slices/jobSlice';
+import JobCard from '../../components/JobCard';
+import { getJobs } from '../../../redux/slices/jobSlice';
 import { useDispatch , useSelector } from 'react-redux';
+import Hero from '../../components/HeroSection';
 function HomePage() {
  const {jobs} = useSelector((state)=>state.job)
 console.log(jobs)
@@ -29,8 +30,9 @@ console.log(jobs)
 
   return (
     <div className="p-6">
+      <Hero/>
       <div className="mb-6">
-        <h1 className="text-2xl text-white font-semibold">Job Listings</h1>
+        <h1 className="text-2xl text-white font-[900]">Job Listings</h1>
         <p className="text-sm font-medium text-red text-gray-500">Find your next job</p>
       </div>
 
@@ -59,7 +61,7 @@ console.log(jobs)
           placeholder="Min Salary"
           value={salary}
           onChange={(e) => setSalary(e.target.value)}
-          className="p-2 bg-input-field rounded-lg w-1/4"
+          className="p-2 bg-input-field rounded-lg w-1/4" 
         />
         <select
           value={technology}
@@ -74,7 +76,7 @@ console.log(jobs)
       </div>
 
     
-      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-4 mt-10 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6">
         {jobs.length > 0 ? (
         jobs.map((job) => <JobCard key={job.id} job={job} />)
         ) : (

@@ -1,6 +1,9 @@
+
+
 @tailwind base;
+
 @layer base {
-  body {  @apply font-sans bg-gray-alpha-1} 
+  body {  @apply font-display} 
 }
  
 @tailwind components;
@@ -8,10 +11,15 @@
 
 @tailwind utilities;
 
-
 @layer utilities {
   .error {
     @apply text-bright-red mt-2 ml-1 text-xs
   }
 }
 
+@import url('https://fonts.googleapis.com/css2?family=CustomFont:wght@900&display=swap');
+
+
+body {
+  background-color: #121212 !important;
+}

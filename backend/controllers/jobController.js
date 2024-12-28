@@ -47,6 +47,7 @@ const getJobs = async (req, res) => {
     console.log(query);
 
     const jobs = await Job.find(query)
+      .select('-applicants')
       .populate('companyName')
       .populate('phoneNumber')
       .populate('email');
@@ -58,6 +59,20 @@ const getJobs = async (req, res) => {
       message: error.message,
     });
   }
+};
+
+const getSingleJob = async (req, res) => {
+  const { jobId } = req.params;
+
+  const singleJob = await Job.findById(jobId);
+
+  if (!singleJob) {
+    return res.status(400).json({
+      message: 'No job details found',
+    });
+  }
+
+  sendSuccess('Job Details Successfully fetched', singleJob, res);
 };
 
 const applyJob = async (req, res) => {
@@ -102,13 +117,17 @@ const applyJob = async (req, res) => {
 
     console.log('Job Details:', job);
 
-     const appliedJob = job.applicants.some((job) => job.userId === userId);
+    const appliedJob = job.applicants.some(
+      (job) => job.userId.toString() === userId
+    );
     console.log(appliedJob);
     if (appliedJob) {
       return res.status(400).json({
         message: 'You have already applied for this Job',
       });
     }
+
+    
 
     console.log('Applying for Job:', { userId, jobId });
 
@@ -174,4 +193,33 @@ const getApplicants = async (req, res) => {
   }
 };
 
-export { createJob, getJobs, applyJob, getApplicants };
+const getJobsByCreator = async (req, res) => {
+  try {
+    console.log(req.params);
+    const { userId } = req.params;
+
+    const jobs = await Job.find({ createdBy: userId }).populate(
+      'createdBy',
+      'name , email'
+    );
+
+    if (!jobs) {
+      res.status(404).json({
+        message: 'No Job Found',
+      });
+    }
+
+    sendSuccess('Jobs successfully fetched', jobs, res);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export {
+  createJob,
+  getJobs,
+  applyJob,
+  getApplicants,
+  getJobsByCreator,
+  getSingleJob,
+};

@@ -9,6 +9,7 @@ const UserSchema = new mongoose.Schema({
   },
   password: {
     type: String,
+    select: false,
   },
   phoneNumber: {
     type: Number,
@@ -70,10 +71,7 @@ const UserSchema = new mongoose.Schema({
     {
       jobId: { type: mongoose.Schema.Types.ObjectId, ref: 'Job' },
     },
-
   ],
-
-  
 });
 
 UserSchema.pre('save', function (next) {

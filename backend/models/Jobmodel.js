@@ -5,8 +5,8 @@ const JobSchema = new mongoose.Schema({
     type: String,
   },
   companyName: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    type:String,
+   
   },
   location: {
     type: String,
@@ -61,7 +61,9 @@ const JobSchema = new mongoose.Schema({
       },
       resume: { type: String },
     },
+    
   ],
+  createdBy : {type : mongoose.Schema.Types.ObjectId , ref : 'User',required : true},
   postedDate: { type: Date, default: Date.now() },
 });
 

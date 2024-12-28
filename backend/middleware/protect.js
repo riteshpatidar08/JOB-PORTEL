@@ -4,8 +4,7 @@ import User from '../models/Usermodel.js';
 
 const protect = async (req, res, next) => {
 
-  const auth =
-    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiam9ic2Vla2VyIiwiaWQiOiI2NzYzY2FhZjYwNWQ1NmViZTFkOTg5MDkiLCJuYW1lIjoicml0ZXNoIiwiaWF0IjoxNzM1MDIzMzMzLCJleHAiOjE3MzY3NTEzMzN9.LD6sqpWB0bAu1KlfWwGGd4kzXsV0yvFG5NQJaHHRrCo';
+  const auth = req.headers.authorization
     
   if (auth.startsWith('Bearer')) {
     const token = auth.split(' ')[1];

@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import { Outlet } from 'react-router-dom';
 function UnprotectRoutes() {
 const token = getToken() ;
-console.log(token)
+
 
 if(token){
   return  <Navigate to='/' />

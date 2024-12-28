@@ -25,7 +25,7 @@ function Navbar() {
     setDropdownVisible(false);
   };
   return (
-    <header className="h-16 m-3 rounded-lg drop-shadow-md px-4 sticky z-10 top-0 flex bg-dark-gray-1 items-center justify-between">
+    <header className="h-16 m-3 bg-opacity-50 backdrop-blur-lg rounded-lg  drop-shadow-md px-4 sticky z-10 top-0 flex bg-dark-gray-1 items-center justify-between">
       <Link to="/" className="text-2xl ml-6 text-white font-bold">
         Job<span className="text-2xl font-bold text-red">finder</span>
       </Link>
@@ -43,12 +43,12 @@ function Navbar() {
             >
               Jobs
             </Link>
-            <span className="text-white">
+            <span className="text-white text-sm">
               {dropdownVisible ? <ChevronUp /> : <ChevronDown />}
             </span>
           </div>
           {dropdownVisible && (
-            <div className="bg-input-field w-64 p-4 absolute top-6 rounded-lg text-white flex gap-6 ">
+            <div className="bg-input-field w-64 p-4 absolute top-6 -left-28 rounded-lg text-white flex gap-6 ">
               <div className="flex flex-col flex-1  gap-2 text-sm">
                 <Link>Jobs for React</Link>
                 <Link>Jobs for Node JS</Link>

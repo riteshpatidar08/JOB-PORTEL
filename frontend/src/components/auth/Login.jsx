@@ -25,13 +25,14 @@ function Login() {
   useEffect(() => {
     if (role === 'recruiter') {
       navigate('/');
-    } if(role ==='jobseeker'){
-      navigate('/')
+    }
+    if (role === 'jobseeker') {
+      navigate('/');
     }
   }, [role]);
 
   return (
-    <div className="p-6 bg-dark-gray-1 text-white container max-h-[500px] overflow-y-scroll shadow-md max-w-2xl mx-auto mt-10 rounded-xl">
+    <div className="p-6 bg-dark-gray-1 text-white container max-h-[500px] overflow-y-scroll shadow-md max-w-xl mx-auto mt-8 rounded-xl">
       <div className="flex flex-col gap-1 my-6">
         <h1 className="text-sm font-semibold">
           Welcome back to <span className="text-red">JobFinder</span>
@@ -97,7 +98,7 @@ function Login() {
 
         <button
           type="submit"
-          className="w-full font-semibold tracking-wide bg-red text-white py-2 rounded-full"
+          className="w-full font-semibold tracking-wide  bg-red text-white py-2 rounded-full"
         >
           {loading ? (
             <CircularProgress sx={{ color: 'white' }} size={14} />
