@@ -70,7 +70,7 @@ export default {
         '4/5': '80%',
       },
       fontFamily: {
-        sans: ['Inter', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'],
+        sans: 'Inter',
         serif: ['Merriweather', 'Georgia', 'serif'],
         mono: ['Fira Code', 'Courier New', 'monospace'],
         display: ['Poppins', 'sans-serif'],

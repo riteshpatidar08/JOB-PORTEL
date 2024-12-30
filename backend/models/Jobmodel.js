@@ -5,8 +5,7 @@ const JobSchema = new mongoose.Schema({
     type: String,
   },
   companyName: {
-    type:String,
-   
+    type: String,
   },
   location: {
     type: String,
@@ -23,7 +22,7 @@ const JobSchema = new mongoose.Schema({
   },
   experience: {
     type: String,
-    enum: ['Freshers', '1-2 years', '2-3 years', '3+ years'],
+   
     required: true,
   },
   salaryRange: {
@@ -40,12 +39,10 @@ const JobSchema = new mongoose.Schema({
     required: true,
   },
   phoneNumber: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    type: String,
   },
   email: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    type: String,
   },
   isActive: {
     type: Boolean,
@@ -61,9 +58,12 @@ const JobSchema = new mongoose.Schema({
       },
       resume: { type: String },
     },
-    
   ],
-  createdBy : {type : mongoose.Schema.Types.ObjectId , ref : 'User',required : true},
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
   postedDate: { type: Date, default: Date.now() },
 });
 

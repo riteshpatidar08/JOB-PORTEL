@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { createJob } from '../../redux/slices/jobSlice';
 import {
   Drawer,
   Button,
@@ -11,8 +12,11 @@ import {
   Group,
 } from '@mantine/core';
 import axios from 'axios';
-
+import { toast } from 'sonner';
+import { getId, getToken } from '../lib/utils';
+import { useDispatch } from 'react-redux';
 const JobFormDrawer = () => {
+  const dispatch = useDispatch()
   const [opened, setOpened] = useState(false);
 
   const {
@@ -30,53 +34,34 @@ const JobFormDrawer = () => {
     'Contract',
     'Internship',
   ];
-  const experienceOptions = ['Freshers', '1-2 years', '2-3 years', '3+ years'];
+  const experienceOptions = ['Freshers',  '1-2 years', '2-3 years', '3+ years' , '5+ year'];
 
-  const onSubmit = async (data) => {
-    try {
-      const userId = localStorage.getItem('userId');
-      if (!userId) {
-        alert('User ID not found. Please log in.');
-        return;
-      }
+  const onSubmit = (data) => {
+const jobPayload  = {
+  ...data , salaryRange  : {min : Number(data.minSalary) , max : Number(data.maxSalary)} , requirement : data.requirement.split(',').map((el)=>el.trim()), createdBy : getId()
+ 
+}
+ console.log(jobPayload)
 
-      const payload = {
-        ...data,
-        createdBy: userId,
-        requirement: data.requirement.split(',').map((req) => req.trim()),
-        salaryRange: { min: data.minSalary, max: data.maxSalary },
-      };
+ dispatch(createJob(jobPayload))
+  }
 
-      const response = await axios.post(
-        '',
-        payload
-      );
-      alert('Job created successfully!');
-      setOpened(false);
-      reset();
-    } catch (error) {
-      console.error('Error creating job:', error);
-      alert('Failed to create job. Please try again.');
-    }
-  };
+ 
+
 
   return (
     <>
-      <Button onClick={() => setOpened(true)}>Create Job</Button>
-
+      <div className="flex justify-end mr-5">
+        <Button onClick={() => setOpened(true)}>Create Job</Button>
+      </div>
       <Drawer
         opened={opened}
         onClose={() => setOpened(false)}
         title="Create a Job"
         padding="md"
         size="md"
-        position="left"
-        styles={{
-          drawer: {
-            backgroundColor: '#121212', 
-            color: '#fff', 
-          },
-        }}
+        position="right"
+        style={{fontWeight:600}}
       >
         <form onSubmit={handleSubmit(onSubmit)}>
           <TextInput
@@ -89,30 +74,24 @@ const JobFormDrawer = () => {
           <TextInput
             label="Company Name"
             placeholder="Enter company name"
-            {...register('companyName', {
-              required: 'Company name is required',
-            })}
+            {...register('companyName', { required: 'Company name is required' })}
             error={errors.companyName?.message}
           />
 
-           <TextInput
+          <TextInput
             label="Email"
-            type = 'email'
+            type="email"
             placeholder="Enter Email"
-            {...register('email', {
-              required: 'email is required',
-            })}
+            {...register('email', { required: 'Email is required' })}
             error={errors.email?.message}
           />
 
-           <NumberInput
-              label="Phone Number"
-              placeholder="Enter phone number"
-              {...register('phoneNumber', {
-                required: 'Phone number is required',
-              })}
-              error={errors.phoneNumber?.message}
-            />
+          <NumberInput
+            label="Phone Number"
+            placeholder="Enter phone number"
+            {...register('phoneNumber', { required: 'Phone number is required' })}
+            error={errors.phoneNumber?.message}
+          />
 
           <TextInput
             label="Location"
@@ -133,18 +112,14 @@ const JobFormDrawer = () => {
           <Textarea
             label="Job Description"
             placeholder="Enter job description"
-            {...register('jobDescription', {
-              required: 'Job description is required',
-            })}
+            {...register('jobDescription', { required: 'Job description is required' })}
             error={errors.jobDescription?.message}
           />
 
           <TextInput
             label="Requirements"
             placeholder="Enter requirements (comma-separated)"
-            {...register('requirement', {
-              required: 'Requirements are required',
-            })}
+            {...register('requirement', { required: 'Requirements are required' })}
             error={errors.requirement?.message}
           />
 
@@ -161,23 +136,19 @@ const JobFormDrawer = () => {
             <NumberInput
               label="Min Salary"
               placeholder="Enter minimum salary"
-              {...register('minSalary', {
-                required: 'Minimum salary is required',
-              })}
+              {...register('minSalary', { required: 'Minimum salary is required' })}
               error={errors.minSalary?.message}
             />
             <NumberInput
               label="Max Salary"
               placeholder="Enter maximum salary"
-              {...register('maxSalary', {
-                required: 'Maximum salary is required',
-              })}
+              {...register('maxSalary', { required: 'Maximum salary is required' })}
               error={errors.maxSalary?.message}
             />
           </Group>
 
           <Group position="right" mt="md">
-            <Button type="submit">Submit</Button>
+            <Button type="submit">Create Job</Button>
           </Group>
         </form>
       </Drawer>

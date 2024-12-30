@@ -10,11 +10,13 @@ import './App.css';
 import PostJob from './pages/RecruiterPages/PostJob';
 import '@mantine/core/styles.css';
 import JobDetailsPage from './pages/OpenPages/JobDetailsPage';
-
+import Footer from './components/Footer'
+import { Toaster } from 'sonner';
 function App() {
   return (
     <div className="black antialiased">
       <Navbar />
+
       <Routes>
         <Route element={<UnprotectRoutes />}>
           <Route path="/register" element={<Signup />} />
@@ -29,6 +31,16 @@ function App() {
           <Route path="/applicants" element={<ApplicantsPage />} />
         </Route>
       </Routes>
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          style: {
+            backgroundColor: '#575757',
+            color: 'white',
+          },
+        }}
+      />
+      <Footer/>
     </div>
   );
 }

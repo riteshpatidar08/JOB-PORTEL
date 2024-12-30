@@ -6,15 +6,15 @@ import { BrowserRouter } from 'react-router-dom';
 import store from '../redux/store.js';
 import { Provider } from 'react-redux';
 import { MantineProvider } from '@mantine/core';
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
-      <MantineProvider>
-         <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <MantineProvider defaultColorScheme="dark">
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </MantineProvider>
-     
     </Provider>
   </StrictMode>
 );

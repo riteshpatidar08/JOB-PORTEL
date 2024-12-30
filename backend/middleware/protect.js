@@ -6,7 +6,7 @@ const protect = async (req, res, next) => {
 
   const auth = req.headers.authorization
     
-  if (auth.startsWith('Bearer')) {
+  if (auth?.startsWith('Bearer')) {
     const token = auth.split(' ')[1];
     console.log(token);
     const { id } = jwt.verify(token, 'hello-this-is-my-secret-string');

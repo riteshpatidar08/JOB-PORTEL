@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logOut } from '../../redux/slices/authSlice';
 import { ChevronUp, ChevronDown } from 'lucide-react';
+import ProfileDropdown from './ProfileDropdown';
 function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -12,13 +13,10 @@ function Navbar() {
 
   const dispatch = useDispatch();
 
-  const handleLogOut = async () => {
-    await dispatch(logOut());
-    navigate('/login');
-  };
+
 
   const handleDropdown = () => {
-    setDropdownVisible(true);
+    // setDropdownVisible(true);
   };
 
   const handleLeaveDropdown = () => {
@@ -39,16 +37,14 @@ function Navbar() {
           <div className="flex">
             <Link
               to="/"
-              className="text-md text-white hover:text-red transition-all duration-150 font-medium"
+              className="text-sm text-white hover:bg-red p-2 rounded-lg transition-all duration-150 font-medium"
             >
               Jobs
             </Link>
-            <span className="text-white text-sm">
-              {dropdownVisible ? <ChevronUp /> : <ChevronDown />}
-            </span>
+           
           </div>
           {dropdownVisible && (
-            <div className="bg-input-field w-64 p-4 absolute top-6 -left-28 rounded-lg text-white flex gap-6 ">
+            <div className="bg-input-field w-64 p-4 absolute top-7 -left-28 rounded-lg text-white flex gap-6 ">
               <div className="flex flex-col flex-1  gap-2 text-sm">
                 <Link>Jobs for React</Link>
                 <Link>Jobs for Node JS</Link>
@@ -78,7 +74,7 @@ function Navbar() {
             <nav>
               <Link
                 to="/profile"
-                className="text-md hover:underline text-white transition-all duration-150 font-medium"
+                className="text-md hover:text-red text-white transition-all duration-150 font-medium"
               >
                 Profile
               </Link>
@@ -91,7 +87,7 @@ function Navbar() {
             <nav>
               <Link
                 to="/post-job"
-                className="text-md hover:text-red ease-in-out  text-white transition-all duration-150 font-medium"
+                className="text-sm hover:bg-red p-2  rounded-lg ease-in-out  text-white transition-all duration-150 font-medium"
               >
                 Post a Job
               </Link>
@@ -99,7 +95,7 @@ function Navbar() {
             <nav>
               <Link
                 to="/applicants"
-                className="text-md hover:underline text-white transition-all duration-150 font-medium"
+                className="text-md hover:text-red text-white transition-all duration-150 font-medium"
               >
                 View Applicants
               </Link>
@@ -107,7 +103,7 @@ function Navbar() {
             <nav>
               <Link
                 to="/manage-jobs"
-                className="text-md hover:underline  text-white transition-all duration-150 font-medium"
+                className="text-md hover:text-red  text-white transition-all duration-150 font-medium"
               >
                 Manage Jobs
               </Link>
@@ -148,7 +144,7 @@ function Navbar() {
               </Link>
               <Link
                 to="/register"
-                className="bg-red text-white px-6 py-2 rounded-full hover:bg-red-600 hover:text-white hover:scale-105 transition-all duration-200 ease-in-out"
+                className="border border-red-500 text-white px-6 py-2 rounded-full hover:bg-red-600 hover:text-white hover:scale-105 transition-all duration-200 ease-in-out"
               >
                 Register
               </Link>
@@ -166,13 +162,7 @@ function Navbar() {
 
         {role && (
           <nav>
-            <Link
-              to="/logout"
-              onClick={handleLogOut}
-              className="bg-red text-white px-8 py-2 rounded-full hover:bg-red-100 transition-all"
-            >
-              Logout
-            </Link>
+      <ProfileDropdown role = {role}/>
           </nav>
         )}
       </div>

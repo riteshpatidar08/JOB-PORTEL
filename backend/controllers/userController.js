@@ -78,7 +78,10 @@ const Login = async (req, res) => {
       });
     }
 
-    const isMatchPassword = comparePassword(password, existingUser.password);
+    console.log(existingUser)
+    const isMatchPassword = await comparePassword(password, existingUser.password);
+
+    console.log(isMatchPassword)
 
     if (!isMatchPassword) {
       return res.status(400).json({
