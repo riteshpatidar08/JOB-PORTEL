@@ -79,7 +79,10 @@ const Login = async (req, res) => {
     }
 
     console.log(existingUser);
-    const isMatchPassword = await comparePassword(password, existingUser.password);
+    const isMatchPassword = await comparePassword(
+      password,
+      existingUser.password
+    );
 
     console.log(isMatchPassword);
 
@@ -95,12 +98,11 @@ const Login = async (req, res) => {
       name: existingUser.name,
     });
 
-   
     const { password: _, ...userData } = existingUser.toObject();
 
     res.status(200).json({
       message: 'Login Successful',
-      data: { token, user: userData }, 
+      data: { token, user: userData },
     });
   } catch (error) {
     console.error('Error in Login:', error);
@@ -111,8 +113,25 @@ const Login = async (req, res) => {
   }
 };
 
+const getSingleUser = async (req, res) => {
+  try {
+    console.log('role', req.user.role);
 
-export { Signup, Login };
+    if (req.user.role === 'recruiter') {
+      const user = await User.findById(req.user._id).select(
+        '-jobseeker -admin -password'
+      );
+      sendSuccess('Recruiter details fetched', user, res);
+    } else if (req.user.role === 'jobseeker') {
+      const user = await User.findById(req.user._id).select(
+        '-recruiter -admin -password'
+      );
+      sendSuccess('jobSeeker details fetched', user, res);
+    }
+  } catch (error) {}
+};
+
+export { Signup, Login, getSingleUser };
 
 //step to apply for a job
 
