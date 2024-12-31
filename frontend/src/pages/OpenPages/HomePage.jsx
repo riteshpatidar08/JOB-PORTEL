@@ -4,7 +4,7 @@ import { getJobs } from '../../../redux/slices/jobSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Hero from '../../components/HeroSection';
 import { Checkbox, Group } from '@mantine/core';
-
+import { Link } from 'react-router-dom';
 function HomePage() {
   const { jobs } = useSelector((state) => state.job);
   console.log(jobs);
@@ -34,6 +34,10 @@ function HomePage() {
         : [...prevState, value]
     );
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div>
@@ -131,27 +135,36 @@ function HomePage() {
               Available Jobs
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-              {jobs.length > 0 ? (
-                jobs
-                  .filter((job) => {
-                    const salaryFilter =
-                      salaryRange.length === 0 ||
-                      salaryRange.some(
-                        (range) =>
-                          job.salary >= parseInt(range.split('-')[0]) &&
-                          job.salary <= parseInt(range.split('-')[1])
-                      );
+              <div>
+                {jobs.length > 0 ? (
+                  jobs
+                    .slice(0, 5)
+                    .filter((job) => {
+                      const salaryFilter =
+                        salaryRange.length === 0 ||
+                        salaryRange.some(
+                          (range) =>
+                            job.salary >= parseInt(range.split('-')[0]) &&
+                            job.salary <= parseInt(range.split('-')[1])
+                        );
 
-                    const roleFilter =
-                      roles.length === 0 ||
-                      roles.some((role) => job.title.includes(role));
+                      const roleFilter =
+                        roles.length === 0 ||
+                        roles.some((role) => job.title.includes(role));
 
-                    return salaryFilter && roleFilter;
-                  })
-                  .map((job) => <JobCard key={job.id} job={job} />)
-              ) : (
-                <p className="text-white">No jobs found</p>
-              )}
+                      return salaryFilter && roleFilter;
+                    })
+                    .map((job) => <JobCard key={job.id} job={job} />)
+                ) : (
+                  <p className="text-white">No jobs found</p>
+                )}
+                <Link
+                  to="/all-jobs"
+                  className="hover:underline cursor-pointer text-xs font-semibold"
+                >
+                  See more
+                </Link>
+              </div>
             </div>
           </div>
         </div>

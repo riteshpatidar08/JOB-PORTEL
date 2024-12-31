@@ -10,8 +10,12 @@ import './App.css';
 import PostJob from './pages/RecruiterPages/PostJob';
 import '@mantine/core/styles.css';
 import JobDetailsPage from './pages/OpenPages/JobDetailsPage';
-import Footer from './components/Footer'
+import Footer from './components/Footer';
+import AllJobPage from './pages/OpenPages/AllJobPage.jsx';
 import { Toaster } from 'sonner';
+import ProfilePage from './pages/CommonPages/ProfilePage.jsx';
+import 'mantine-datatable/styles.layer.css';
+
 function App() {
   return (
     <div className="black antialiased">
@@ -24,8 +28,18 @@ function App() {
         </Route>
 
         <Route path="/" element={<HomePage />} />
+        <Route path="/all-jobs" element={<AllJobPage />} />
         <Route path="/job/:id" element={<JobDetailsPage />} />
 
+        <Route
+          element={
+            <ProtectedRoutes
+              allowedRoles={['jobseeker', 'recruiter', 'admin']}
+            />
+          }
+        >
+          <Route path="/profile" element={<ProfilePage />} />
+        </Route>
         <Route element={<ProtectedRoutes allowedRoles={['recruiter']} />}>
           <Route path="/post-job" element={<PostJob />} />
           <Route path="/applicants" element={<ApplicantsPage />} />
@@ -40,7 +54,7 @@ function App() {
           },
         }}
       />
-      <Footer/>
+      <Footer />
     </div>
   );
 }

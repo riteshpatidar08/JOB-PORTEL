@@ -29,8 +29,10 @@ const getJobs = async (req, res) => {
       location,
       employment,
       experience,
+      currentPage = 1 ,
+      totalItems = 10
     } = req.query;
-
+console.log(currentPage)
     const query = {
       ...(minSalary &&
         maxSalary && {
@@ -46,13 +48,15 @@ const getJobs = async (req, res) => {
 
     console.log(query);
 
-    const jobs = await Job.find(query)
+    const jobs = await Job.find(query).sort({postedDate : -1}).limit(totalItems).skip((currentPage - 1)* totalItems)
       .select('-applicants')
-      .populate('companyName')
-      .populate('phoneNumber')
-      .populate('email');
+      
+const totalCount = await Job.countDocuments(query)
 
-    sendSuccess('Jobs fetched successfully', jobs, res);
+const totalPages = Math.ceil(totalCount/10)
+
+console.log(totalPages)
+    sendSuccess('Jobs fetched successfully', {jobs, totalCount , totalPages}, res);
   } catch (error) {
     console.log(error);
     return res.status(400).json({
@@ -201,7 +205,7 @@ const getJobsByCreator = async (req, res) => {
     const jobs = await Job.find({ createdBy: userId }).populate(
       'createdBy',
       'name , email'
-    );
+    ).populate('applicants.userId', 'name , email , resume , status');
 
     if (!jobs) {
       res.status(404).json({

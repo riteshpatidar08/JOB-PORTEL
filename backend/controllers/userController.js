@@ -74,18 +74,18 @@ const Login = async (req, res) => {
 
     if (!existingUser) {
       return res.status(400).json({
-        message: 'User is not registered , Please Register',
+        message: 'User is not registered, Please Register',
       });
     }
 
-    console.log(existingUser)
+    console.log(existingUser);
     const isMatchPassword = await comparePassword(password, existingUser.password);
 
-    console.log(isMatchPassword)
+    console.log(isMatchPassword);
 
     if (!isMatchPassword) {
       return res.status(400).json({
-        message: 'Password does not match , Please enter correct password',
+        message: 'Password does not match, Please enter the correct password',
       });
     }
 
@@ -95,18 +95,22 @@ const Login = async (req, res) => {
       name: existingUser.name,
     });
 
+   
+    const { password: _, ...userData } = existingUser.toObject();
+
     res.status(200).json({
-      message: 'Login Successfull',
-      data: token,
+      message: 'Login Successful',
+      data: { token, user: userData }, 
     });
   } catch (error) {
-    console.error('Error in Signup:', error);
+    console.error('Error in Login:', error);
     return res.status(500).json({
       message: 'Internal Server Error',
       error: error.message,
     });
   }
 };
+
 
 export { Signup, Login };
 

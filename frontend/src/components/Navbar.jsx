@@ -15,13 +15,8 @@ function Navbar() {
 
 
 
-  const handleDropdown = () => {
-    // setDropdownVisible(true);
-  };
 
-  const handleLeaveDropdown = () => {
-    setDropdownVisible(false);
-  };
+
   return (
     <header className="h-16 m-3 bg-opacity-50 backdrop-blur-lg rounded-lg  drop-shadow-md px-4 sticky z-10 top-0 flex bg-dark-gray-1 items-center justify-between">
       <Link to="/" className="text-2xl ml-6 text-white font-bold">
@@ -30,8 +25,7 @@ function Navbar() {
 
       <div className="flex items-center justify-between gap-5">
         <nav
-          onMouseEnter={handleDropdown}
-          onMouseLeave={handleLeaveDropdown}
+    
           className="relative"
         >
           <div className="flex">
@@ -43,22 +37,7 @@ function Navbar() {
             </Link>
            
           </div>
-          {dropdownVisible && (
-            <div className="bg-input-field w-64 p-4 absolute top-7 -left-28 rounded-lg text-white flex gap-6 ">
-              <div className="flex flex-col flex-1  gap-2 text-sm">
-                <Link>Jobs for React</Link>
-                <Link>Jobs for Node JS</Link>
-                <Link>Jobs for Python</Link>
-                <Link>Jobs for Data Analytics</Link>
-              </div>
-              <div className="flex flex-1 flex-col gap-2 text-sm">
-                <Link>Jobs in Jaipur</Link>
-                <Link>Jobs in Delhi</Link>
-                <Link>Jobs in Pune</Link>
-                <Link>Jobs in Indore</Link>
-              </div>
-            </div>
-          )}
+         
         </nav>
 
         {role === 'jobseeker' && (
@@ -92,22 +71,8 @@ function Navbar() {
                 Post a Job
               </Link>
             </nav>
-            <nav>
-              <Link
-                to="/applicants"
-                className="text-md hover:text-red text-white transition-all duration-150 font-medium"
-              >
-                View Applicants
-              </Link>
-            </nav>
-            <nav>
-              <Link
-                to="/manage-jobs"
-                className="text-md hover:text-red  text-white transition-all duration-150 font-medium"
-              >
-                Manage Jobs
-              </Link>
-            </nav>
+           
+          
           </>
         )}
 

@@ -23,6 +23,7 @@ const initialState = {
   error: null,
   token: null,
   role: getRole(),
+  user : null,
   toastId: null, 
 };
 
@@ -46,7 +47,8 @@ const authSlice = createSlice({
         state.toastId = toastId;  
       })
       .addCase(login.fulfilled, (state, action) => {
-        const token = action.payload.data.data;
+        const token = action.payload.data.data.token;
+      state.user = action.payload.data.data.user
         const { role, id, name } = jwtDecode(token);
         state.role = role;
         state.token = token;
